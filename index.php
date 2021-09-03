@@ -1,22 +1,4 @@
 <?php
-<<<<<<< HEAD
-$MAX_FILESIZE=512;         //max. filesize in MiB
-$MAX_FILEAGE=180;           //max. age of files in days
-$MIN_FILEAGE=31;            //min. age of files in days
-$DECAY_EXP=2;               //high values penalise larger files more
-
-$UPLOAD_TIMEOUT=5*60;       //max. time an upload can take before it times out
-$ID_LENGTH=3;               //length of the random file ID
-$STORE_PATH="files/";       //directory to store uploaded files in
-$LOG_PATH=null;             //path to log uploads + resulting links to
-$DOWNLOAD_PATH="%s";        //the path part of the download url. %s = placeholder for filename
-$SITE_URL=site_url();
-$MAX_EXT_LEN=7;             //max. length for file extensions
-$EXTERNAL_HOOK=null;
-$AUTO_FILE_EXT=false;
-
-$ADMIN_EMAIL="admin@example.com";  //address for inquiries
-=======
 class CONFIG
 {
     const MAX_FILESIZE = 512; //max. filesize in MiB
@@ -41,7 +23,6 @@ class CONFIG
         return "$proto://{$_SERVER['HTTP_HOST']}/";
     }
 };
->>>>>>> 5747e1dbd776bb6c2fec63488487543f3950a1e0
 
 
 function site_url()
@@ -130,19 +111,6 @@ function ext_by_finfo(string $path) : string
 // $formatted: set to true to display formatted message instead of bare link
 function store_file(string $name, string $tmpfile, bool $formatted = false) : void
 {
-<<<<<<< HEAD
-    global $STORE_PATH;
-    global $ID_LENGTH;
-    global $SITE_URL;
-    global $DOWNLOAD_PATH;
-    global $MAX_FILESIZE;
-    global $EXTERNAL_HOOK;
-    global $LOG_PATH;
-    global $MAX_EXT_LEN;
-    global $AUTO_FILE_EXT;
-
-=======
->>>>>>> 5747e1dbd776bb6c2fec63488487543f3950a1e0
     //create folder, if it doesn't exist
     if (!file_exists(CONFIG::STORE_PATH))
     {
@@ -209,11 +177,7 @@ function store_file(string $name, string $tmpfile, bool $formatted = false) : vo
     }
 
     //print the download link of the file
-<<<<<<< HEAD
-    $url = sprintf($SITE_URL.'%s', $basename);
-=======
     $url = sprintf(CONFIG::SITE_URL().CONFIG::DOWNLOAD_PATH, $basename);
->>>>>>> 5747e1dbd776bb6c2fec63488487543f3950a1e0
 
     if ($formatted)
     {
@@ -297,25 +261,14 @@ function send_text_file(string $filename, string $content) : void
 // send a ShareX custom uploader config as .json
 function send_sharex_config() : void
 {
-<<<<<<< HEAD
-    global $SITE_URL;
-    $host = $_SERVER["HTTP_HOST"];
-    $filename =  $host.".sxcu";
-    $content = <<<EOT
-=======
     $name = $_SERVER['SERVER_NAME'];
     $site_url = CONFIG::SITE_URL();
     send_text_file($name.'.sxcu', <<<EOT
->>>>>>> 5747e1dbd776bb6c2fec63488487543f3950a1e0
 {
   "Name": "$name",
   "DestinationType": "ImageUploader, FileUploader",
   "RequestType": "POST",
-<<<<<<< HEAD
-  "RequestURL": "$SITE_URL",
-=======
   "RequestURL": "$site_url",
->>>>>>> 5747e1dbd776bb6c2fec63488487543f3950a1e0
   "FileFormName": "file",
   "ResponseType": "Text"
 }
@@ -325,24 +278,13 @@ EOT);
 // send a Hupl uploader config as .hupl (which is just JSON)
 function send_hupl_config() : void
 {
-<<<<<<< HEAD
-    global $SITE_URL;
-    $host = $_SERVER["HTTP_HOST"];
-    $filename =  $host.".hupl";
-    $content = <<<EOT
-=======
     $name = $_SERVER['SERVER_NAME'];
     $site_url = CONFIG::SITE_URL();
     send_text_file($name.'.hupl', <<<EOT
->>>>>>> 5747e1dbd776bb6c2fec63488487543f3950a1e0
 {
   "name": "$name",
   "type": "http",
-<<<<<<< HEAD
-  "targetUrl": "$SITE_URL",
-=======
   "targetUrl": "$site_url",
->>>>>>> 5747e1dbd776bb6c2fec63488487543f3950a1e0
   "fileParam": "file"
 }
 EOT);
@@ -352,17 +294,6 @@ EOT);
 // use it, how to upload, etc.
 function print_index() : void
 {
-<<<<<<< HEAD
-    global $ADMIN_EMAIL;
-    global $SITE_URL;
-    global $MAX_FILEAGE;
-    global $MAX_FILESIZE;
-    global $MIN_FILEAGE;
-    global $DECAY_EXP;
-
-    $sharex_url = $SITE_URL."?sharex";
-    $hupl_url = $SITE_URL."?hupl";
-=======
     $site_url = CONFIG::SITE_URL();
     $sharex_url = $site_url.'?sharex';
     $hupl_url = $site_url.'?hupl';
@@ -372,7 +303,6 @@ function print_index() : void
     $max_age = CONFIG::MAX_FILEAGE;
     $mail = CONFIG::ADMIN_EMAIL;
 
->>>>>>> 5747e1dbd776bb6c2fec63488487543f3950a1e0
 
 echo <<<EOT
 <!DOCTYPE html>
@@ -386,17 +316,10 @@ echo <<<EOT
 <pre>
  === How To Upload ===
 You can upload files to this site via a simple HTTP POST, e.g. using curl:
-<<<<<<< HEAD
-curl -F "file=@/path/to/your/file.jpg" $SITE_URL
-
-Or if you want to pipe to curl *and* have a file extension, add a "filename":
-echo "hello" | curl -F "file=@-;filename=.txt" $SITE_URL
-=======
 curl -F "file=@/path/to/your/file.jpg" $site_url
 
 Or if you want to pipe to curl *and* have a file extension, add a "filename":
 echo "hello" | curl -F "file=@-;filename=.txt" $site_url
->>>>>>> 5747e1dbd776bb6c2fec63488487543f3950a1e0
 
 On Windows, you can use <a href="https://getsharex.com/">ShareX</a> and import <a href="$sharex_url">this</a> custom uploader.
 On Android, you can use an app called <a href="https://github.com/Rouji/Hupl">Hupl</a> with <a href="$hupl_url">this</a> uploader.
